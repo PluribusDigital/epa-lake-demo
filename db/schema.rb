@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20151205181032) do
     t.string  "file"
     t.string  "site_id"
     t.integer "visit_no"
-    t.hstore  "data"
+    t.json    "data"
   end
 
 end
