@@ -21,7 +21,7 @@ require 'csv'
 						file: table_name,
 						site_id: row["SITE_ID"],
 						visit_no: row["VISIT_NO"].to_i,
-						data: row.to_json
+						data: row.to_h
 					)
 				print "."
 			end

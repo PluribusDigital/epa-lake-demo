@@ -4,7 +4,7 @@ class CreateLakeData < ActiveRecord::Migration
       t.string :file
       t.string :site_id
       t.integer :visit_no
-      t.json :data
+      t.hstore :data
     end
   end
 end

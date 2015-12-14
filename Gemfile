@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
 
-ruby '2.1.5'
+ruby '2.2.2'
 
 gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18.2'
 # GraphQL for single endpoint, facebook-style API
-gem 'graphql'
+gem 'graphql', '~> 0.9'
+gem 'graphql-relay', '~>0.4'
 # Bower to manage front-end dependencies
 gem 'bower-rails'
 # Use SCSS for stylesheets

@@ -29,6 +29,21 @@ RSpec.describe TypeMatch do
   		expect( TypeMatch.guess(data) ).to eq "string"
   	end  	
 
+    it "should guess boolean type when yes/no" do 
+      data = ["YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO","YES", "NO"]
+      expect( TypeMatch.guess(data) ).to eq "boolean"
+    end
+
+    it "should guess boolean type when true/false" do 
+      data = ["True","False","True","False","True","False","True","False","True","False","True","False","True","False","True","False","True","False","True","False","True","False","True","False","True","False","True","False","True","False"]
+      expect( TypeMatch.guess(data) ).to eq "boolean"
+    end
+
+    it "should guess boolean type when 1/0" do 
+      data = ["0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1","0","1"]
+      expect( TypeMatch.guess(data) ).to eq "boolean"
+    end
+
   end
 
 end

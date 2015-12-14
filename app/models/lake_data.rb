@@ -1,13 +1,7 @@
 class LakeData < ActiveRecord::Base
-
-  def self.lakes
-    # caonical list of individual lakes
-    self.table('SampledLakeInformation').where(visit_no:1)
-  end
-
-  def self.lakes_by_data(key,value)
-    where_by_key_value self.lakes, key, value
-  end
+  # Note: lake data comes from
+  #  http://www2.epa.gov/national-aquatic-resource-surveys/data-national-aquatic-resource-surveys
+  #  "Lakes 2007", "All" download file set
 
 	def self.table(table)
     # Table is source data file/table name
@@ -20,6 +14,10 @@ class LakeData < ActiveRecord::Base
 
   def self.where_by_key_value(set,key,value)
     set.where "data -> ? = ? ", key, value
+  end
+
+  def method_missing(method_sym, *arguments, &block)
+    data[method_sym.to_s.upcase]
   end
 
 end

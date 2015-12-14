@@ -1,4 +1,4 @@
-var app = angular.module('hello', [
+var app = angular.module('lakedata', [
     'templates', 'ngRoute', 'ngResource', 'directives', 'angular-flash.service',
     'angular-flash.flash-alert-directive', 'ui.bootstrap'
 ]);
