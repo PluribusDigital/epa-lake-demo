@@ -1,6 +1,5 @@
 var app = angular.module('lakedata', [
-    'templates', 'ngRoute', 'ngResource', 'directives', 'angular-flash.service',
-    'angular-flash.flash-alert-directive', 'ui.bootstrap'
+    'templates', 'ngRoute', 'ngResource', 'ngMaterial', 'directives'
 ]);
 
 app.config([
@@ -13,5 +12,3 @@ app.config([
 ]);
 
 var directives  = angular.module('directives', []);
-
-

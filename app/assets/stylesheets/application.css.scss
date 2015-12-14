@@ -11,9 +11,6 @@
  * file per style scope.
  *
  *= require_self
- *= require bootstrap_mods
+ *= require angular-material
  *= require_tree .
  */
-
-@import "bootstrap-sass-official/assets/stylesheets/bootstrap-sprockets";
-@import "bootstrap-sass-official/assets/stylesheets/bootstrap";

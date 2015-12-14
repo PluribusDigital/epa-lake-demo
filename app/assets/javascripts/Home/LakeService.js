@@ -10,9 +10,7 @@ app.factory('LakeService',
             },
 
             searchSuccess: function (response) {
-                console.log(response.data);
-                return response.data.lakes;
-                // return response;
+                return response.data.data.lakes;
             },
 
             // These methods encapsulate API calls

@@ -1,3 +1,23 @@
-﻿<div class="jumbotron">
-    Hello World!
-</div>
+﻿
+<!-- Search Form -->
+<form ng-submit="$event.preventDefault()">
+  <md-autocomplete
+      md-selected-item="selectedItem"
+      md-search-text="searchText"
+      md-items="item in search(searchText)"
+      md-item-text="item.lakename"
+      md-min-length="0"
+      placeholder="Find a lake by its name">
+    <md-item-template>
+      <span md-highlight-text="searchText" md-highlight-flags="^i">
+        {{item.lakename}}
+        ({{item.site_id}})
+      </span>
+    </md-item-template>
+    <md-not-found>
+      No lakes matching "{{searchText}}" were found.
+    </md-not-found>
+  </md-autocomplete>
+</form>
+<!-- /Search Form -->
+

@@ -16,7 +16,7 @@ QueryRoot = GraphQL::ObjectType.define do
     description "List of lakes"
     argument :search_string, !types.String, "Substring of text to search"
     resolve -> (object, arguments, context) {
-      Lake.substring_search(arguments[:search_string]).limit(10)
+      Lake.substring_search(arguments[:search_string])
     }
 
   end
