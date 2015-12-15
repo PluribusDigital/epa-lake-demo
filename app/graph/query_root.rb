@@ -7,7 +7,7 @@ QueryRoot = GraphQL::ObjectType.define do
     description "Find a Lake by site id"
     argument :site_id, !types.ID, "SITE_ID of lake"
     resolve -> (object, arguments, context) {
-      Lake.find("NLA06608-0001")
+      Lake.find(arguments[:site_id])
     }
   end
 

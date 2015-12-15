@@ -5,12 +5,13 @@
       md-selected-item="selectedItem"
       md-search-text="searchText"
       md-items="item in search(searchText)"
+      md-selected-item-change="selectLake(item)"
       md-item-text="item.lakename"
       md-min-length="0"
       placeholder="Find a lake by its name">
     <md-item-template>
       <span md-highlight-text="searchText" md-highlight-flags="^i">
-        {{item.lakename}}
+        {{item.lakename}} - {{item.cntyname}}, {{item.st}} 
         ({{item.site_id}})
       </span>
     </md-item-template>
@@ -21,3 +22,13 @@
 </form>
 <!-- /Search Form -->
 
+<!-- Lake Detail -->
+<h1>{{lake.lakename}}</h1>
+
+<table>
+  <tr ng-repeat="(field,value) in lake">
+    <th>{{field}}</th>
+    <td>{{value}}</td>
+    <td>{{columnMeta[field]}}</td>
+  </tr>
+</table>

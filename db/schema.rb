@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205181032) do
+ActiveRecord::Schema.define(version: 20151214162047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20151205181032) do
     t.string  "site_id"
     t.integer "visit_no"
     t.hstore  "data"
+  end
+
+  create_table "lake_data_fields", force: :cascade do |t|
+    t.string   "file"
+    t.string   "field_name"
+    t.hstore   "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

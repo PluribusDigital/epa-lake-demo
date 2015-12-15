@@ -9,6 +9,3 @@ class QueriesController < ApplicationController
     render json: result
   end
 end
-
-
-# query laker {lakes{site_id,lakename}}
