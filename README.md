@@ -5,6 +5,9 @@ Provides the starting point for STSI prototypes
 *Windows Users should perform the following steps using the Git Shell*
 
 1. `npm install`
+2. `bundle install`
+3. create a `.env` file
+  1. `EPA_DATABASE_PASSWORD=<postgres_password>`
 2. `rake db:reset`
 3. `rake bower:install`
 
