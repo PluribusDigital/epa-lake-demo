@@ -23,13 +23,49 @@
 <!-- /Search Form -->
 
 
-
 <!-- Lake Detail -->
 <h1>{{lake.lakename}}</h1>
 <table>
-  <tr ng-repeat="(field,value) in lake">
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+    <th>Field Details</th>
+  </tr>
+  <tr ng-repeat="(field,value) in lake" ng-click="selectField(field)">
     <th>{{field}}</th>
     <td>{{value}}</td>
-    <td>{{columnMeta[field]}}</td>
+    <td>
+      <md-card ng-show="selectedField==field" >
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{meta.field_name}}</span>
+            <span class="md-subhead">{{meta.type}}</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-lg card-media"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <table>
+          <tr ng-repeat="count in meta.values.counts">
+            <th align="left">{{count[0]}}</th>
+            <td align="right">{{count[1]}}</td>
+          </tr>
+          <tr ng-show="meta.values.min">
+            <th align="left">Minimum</th>
+            <td align="right">{{meta.values.min}}</td>
+          </tr>
+          <tr ng-show="meta.values.avg">
+            <th align="left">Average</th>
+            <td align="right">{{meta.values.avg}}</td>
+          </tr>
+          <tr ng-show="meta.values.max">
+            <th align="left">Maximum</th>
+            <td align="right">{{meta.values.max}}</td>
+          </tr>
+          </tr>
+
+        </table>
+      </md-card>
+    </td>
   </tr>
 </table>

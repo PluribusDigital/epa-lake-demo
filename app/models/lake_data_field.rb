@@ -8,6 +8,10 @@ class LakeDataField < ActiveRecord::Base
     eval(data["values"]).to_json
   end
 
+  def self.match_name(name)
+    all.where("lower(field_name) LIKE ?",name.downcase)
+  end
+
   def self.graphql_fields_for_table(table)
     all.where(file:table).each do |f|
       puts "field :#{f.field_name.downcase.to_sym}, !types.#{translate_to_graphql_type(f.data['type'])}, 'Description Required by EPA'"

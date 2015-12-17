@@ -55,7 +55,6 @@ RSpec.describe "Queries API" do
       v = {'field_name'=>'YEAR'}
       params = {query:q, variables:v}
       post "/queries", params.to_json, {'ACCEPT' => "application/json", 'CONTENT_TYPE' => 'application/json'}
-      puts json
       expect(json["data"]["meta"]).to be_present
     end
 
@@ -63,8 +62,7 @@ RSpec.describe "Queries API" do
       q = "query meta($field_name:String!) {meta(field_name: $field_name){field_name,type,values}}"
       v = {'field_name'=>'amvAll'}
       params = {query:q, variables:v}
-      post "/queries", params.to_json, {'ACCEPT' => "application/json", 'CONTENT_TYPE' => 'application/json'}
-      puts json      
+      post "/queries", params.to_json, {'ACCEPT' => "application/json", 'CONTENT_TYPE' => 'application/json'}      
       values = json['data']['meta']['values']
       expect(JSON.parse(values)['max']).to be_a Float
     end 

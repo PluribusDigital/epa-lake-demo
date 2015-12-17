@@ -2,6 +2,7 @@ app.controller("HomeController", ['$scope', 'LakeService',
 	function ($scope, LakeService) {
 
     $scope.lake = null;
+    $scope.selectedField = null;
     $scope.meta = null;
 
     // typeahead search
@@ -18,6 +19,7 @@ app.controller("HomeController", ['$scope', 'LakeService',
 
     $scope.selectField = function(field_name) {
         getMeta(field_name);
+        $scope.selectedField = field_name;
     }
 
     $scope.selectLake = function(item) {
@@ -34,9 +36,12 @@ app.controller("HomeController", ['$scope', 'LakeService',
 
     getMeta = function (field_name) {
         LakeService.getMeta(field_name,function(data){
-                $scope.meta = data;
+                $scope.meta = data.data.meta;
+                console.log($scope.meta)
             }
         );
     }
+
+    $scope.selectLake({site_id: 'NLA06608-0175'})
 
 }]);

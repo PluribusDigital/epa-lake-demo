@@ -25,7 +25,7 @@ QueryRoot = GraphQL::ObjectType.define do
     description "Lake Field Metadata"
     argument :field_name, !types.String, "Field Name to match"
     resolve -> (object, arguments, context) {
-      LakeDataField.where(field_name:arguments[:field_name]).first
+      LakeDataField.match_name(arguments[:field_name])[0]
     }
   end
 

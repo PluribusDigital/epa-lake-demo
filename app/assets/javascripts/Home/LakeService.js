@@ -31,19 +31,22 @@ app.factory('LakeService',
                             }",
                     variables: {'site_id':site_id}
                 })
-                .then(function (response) { console.log(response.data);successFunction(response.data.data.lake); }, this.error);
+                .then(function (response) { 
+                    successFunction(response.data.data.lake); 
+                }, this.error);
             },
 
             getMeta: function(field_name, successFunction) {
                 return $http.post('/queries', {
-                    query: "query meta($field_name:String!) {meta(field_name: $field_name){field_name,type,values}}",
+                    query: "query meta($field_name:String!) { \
+                              meta(field_name: $field_name){ \
+                                field_name,type,values \
+                              } \
+                            }",
                     variables: {'field_name':field_name}
                 })
                 .then(function (response) { 
-                    var rdata = response.data.data.meta;
-                    rdata.values = JSON.parse(rdata.values);
-                    console.log(rdata);
-
+                    response.data.data.meta.values = JSON.parse(response.data.data.meta.values);
                     successFunction(response.data); 
                 }, this.error);
             }
