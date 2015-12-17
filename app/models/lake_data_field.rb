@@ -1,5 +1,13 @@
 class LakeDataField < ActiveRecord::Base
 
+  def type
+    data["type"]
+  end
+
+  def values
+    eval(data["values"]).to_json
+  end
+
   def self.graphql_fields_for_table(table)
     all.where(file:table).each do |f|
       puts "field :#{f.field_name.downcase.to_sym}, !types.#{translate_to_graphql_type(f.data['type'])}, 'Description Required by EPA'"

@@ -5,7 +5,6 @@ require 'capybara/rails'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
-# ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
@@ -33,6 +32,9 @@ RSpec.configure do |config|
     self.use_transactional_fixtures = true
     DatabaseCleaner.clean
   end
+
+  # automatically parse json response body for API testing
+  config.include Helpers::JsonHelpers, type: :request
 
   config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"

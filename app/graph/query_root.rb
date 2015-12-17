@@ -18,7 +18,15 @@ QueryRoot = GraphQL::ObjectType.define do
     resolve -> (object, arguments, context) {
       Lake.substring_search(arguments[:search_string])
     }
+  end
 
+  field :meta do
+    type LakeFieldType
+    description "Lake Field Metadata"
+    argument :field_name, !types.String, "Field Name to match"
+    resolve -> (object, arguments, context) {
+      LakeDataField.where(field_name:arguments[:field_name]).first
+    }
   end
 
 end
