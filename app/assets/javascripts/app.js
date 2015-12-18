@@ -1,5 +1,6 @@
-var app = angular.module('lakedata', [
-    'templates', 'ngRoute', 'ngResource', 'ngMaterial', 'directives'
+var app = angular.module('lakedata', 
+  [ 'templates', 'ngRoute', 'ngResource', 'ngMaterial', 
+    'md.data.table', 'directives'
 ]);
 
 app.config([

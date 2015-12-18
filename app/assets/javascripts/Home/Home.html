@@ -1,5 +1,4 @@
-﻿
-<!-- Search Form -->
+﻿<!-- Search Form -->
 <form ng-submit="$event.preventDefault()">
   <md-autocomplete
       md-selected-item="selectedItem"
@@ -22,50 +21,23 @@
 </form>
 <!-- /Search Form -->
 
+<md-data-table-toolbar>
+  <h2 class="md-title">{{lake.lakename}}</h2>
+</md-data-table-toolbar>
 
-<!-- Lake Detail -->
-<h1>{{lake.lakename}}</h1>
-<table>
-  <tr>
-    <th>Field</th>
-    <th>Value</th>
-    <th>Field Details</th>
-  </tr>
-  <tr ng-repeat="(field,value) in lake" ng-click="selectField(field)">
-    <th>{{field}}</th>
-    <td>{{value}}</td>
-    <td>
-      <md-card ng-show="selectedField==field" >
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-headline">{{meta.field_name}}</span>
-            <span class="md-subhead">{{meta.type}}</span>
-          </md-card-title-text>
-          <md-card-title-media>
-            <div class="md-media-lg card-media"></div>
-          </md-card-title-media>
-        </md-card-title>
-        <table>
-          <tr ng-repeat="count in meta.values.counts">
-            <th align="left">{{count[0]}}</th>
-            <td align="right">{{count[1]}}</td>
-          </tr>
-          <tr ng-show="meta.values.min">
-            <th align="left">Minimum</th>
-            <td align="right">{{meta.values.min}}</td>
-          </tr>
-          <tr ng-show="meta.values.avg">
-            <th align="left">Average</th>
-            <td align="right">{{meta.values.avg}}</td>
-          </tr>
-          <tr ng-show="meta.values.max">
-            <th align="left">Maximum</th>
-            <td align="right">{{meta.values.max}}</td>
-          </tr>
-          </tr>
-
-        </table>
-      </md-card>
-    </td>
-  </tr>
-</table>
+<md-data-table-container>
+  <table md-data-table md-progress="deferred">
+    <thead md-order="table.order" md-trigger="onOrderChange">
+      <tr>
+        <th name="Field" order-by="field"></th>
+        <th name="Value" order-by="value"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="field in lakeData"  ng-click="selectField(field.name,$event)">
+        <td>{{field.name}}</td>
+        <td>{{field.value}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-data-table-container>

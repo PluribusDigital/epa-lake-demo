@@ -12,6 +12,7 @@
 //
 //= require angular/angular
 //= require angular-material/angular-material
+//= require angular-material-data-table/dist/md-data-table
 //= require angular-animate/angular-animate
 //= require angular-aria/angular-aria
 //= require angular-route/angular-route
