@@ -2,21 +2,21 @@ require 'spec_helper'
 
 RSpec.describe "Queries API" do
 
-  describe "searching lakes" do
+  before :each do 
+    # Lake.all.limit(10).each{|l| puts "Lake.create(file: '#{l.file}', site_id: '#{l.site_id}', visit_no: 1, data: {'ST'=>\'#{l.data['ST']}\','LAKENAME'=>\'#{l.data['LAKENAME']}\','CNTYNAME'=>\'#{l.data['CNTYNAME']}\'})"}
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0044', visit_no: 1, data: {'site_id'=>'NLA06608-0044','st'=>'NE','lakename'=>'Steverson Lake','cntyname'=>'CHERRY'})
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0045', visit_no: 1, data: {'site_id'=>'NLA06608-0045','st'=>'VA','lakename'=>'Beaver Pond','cntyname'=>'AMELIA'})
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0048', visit_no: 1, data: {'site_id'=>'NLA06608-0048','st'=>'MO','lakename'=>'Nolen Blue Hole','cntyname'=>'MISSISSIPPI'})
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0049', visit_no: 1, data: {'site_id'=>'NLA06608-0049','st'=>'OR','lakename'=>'Clear Creek Reservoir','cntyname'=>'BAKER'})
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0050', visit_no: 1, data: {'site_id'=>'NLA06608-0050','st'=>'NH','lakename'=>'Adder Pond','cntyname'=>'MERRIMACK'})
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0053', visit_no: 1, data: {'site_id'=>'NLA06608-0053','st'=>'NY','lakename'=>'South Bay Lake Champlain','cntyname'=>'ESSEX'})
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0057', visit_no: 1, data: {'site_id'=>'NLA06608-0057','st'=>'NC','lakename'=>'Lake Lee','cntyname'=>'UNION'})
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0061', visit_no: 1, data: {'site_id'=>'NLA06608-0061','st'=>'AZ','lakename'=>'Alamo','cntyname'=>'MOHAVE'})
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0062', visit_no: 1, data: {'site_id'=>'NLA06608-0062','st'=>'ND','lakename'=>'(Unnamed Lake)','cntyname'=>'KIDDER'})
+    LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0064', visit_no: 1, data: {'site_id'=>'NLA06608-0064','st'=>'MT','lakename'=>'Fitzpatrick Lake','cntyname'=>'TOOLE'})
+  end
 
-    before :each do 
-      # Lake.all.limit(10).each{|l| puts "Lake.create(file: '#{l.file}', site_id: '#{l.site_id}', visit_no: 1, data: {'ST'=>\'#{l.data['ST']}\','LAKENAME'=>\'#{l.data['LAKENAME']}\','CNTYNAME'=>\'#{l.data['CNTYNAME']}\'})"}
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0044', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0044','ST'=>'NE','LAKENAME'=>'Steverson Lake','CNTYNAME'=>'CHERRY'})
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0045', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0045','ST'=>'VA','LAKENAME'=>'Beaver Pond','CNTYNAME'=>'AMELIA'})
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0048', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0048','ST'=>'MO','LAKENAME'=>'Nolen Blue Hole','CNTYNAME'=>'MISSISSIPPI'})
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0049', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0049','ST'=>'OR','LAKENAME'=>'Clear Creek Reservoir','CNTYNAME'=>'BAKER'})
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0050', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0050','ST'=>'NH','LAKENAME'=>'Adder Pond','CNTYNAME'=>'MERRIMACK'})
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0053', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0053','ST'=>'NY','LAKENAME'=>'South Bay Lake Champlain','CNTYNAME'=>'ESSEX'})
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0057', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0057','ST'=>'NC','LAKENAME'=>'Lake Lee','CNTYNAME'=>'UNION'})
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0061', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0061','ST'=>'AZ','LAKENAME'=>'Alamo','CNTYNAME'=>'MOHAVE'})
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0062', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0062','ST'=>'ND','LAKENAME'=>'(Unnamed Lake)','CNTYNAME'=>'KIDDER'})
-      LakeData.create(file: 'SampledLakeInformation', site_id: 'NLA06608-0064', visit_no: 1, data: {'SITE_ID'=>'NLA06608-0064','ST'=>'MT','LAKENAME'=>'Fitzpatrick Lake','CNTYNAME'=>'TOOLE'})
-    end
+  describe "searching lakes" do
 
     it "provides search results on a substring" do
       q = "query search($searchString:String!) {lakes(search_string: $searchString){site_id,lakename,cntyname,st}}"
@@ -29,6 +29,35 @@ RSpec.describe "Queries API" do
     it "matches on site_id" do
       q = "query search($searchString:String!) {lakes(search_string: $searchString){site_id,lakename,cntyname,st}}"
       v = {'searchString'=>'0049'}
+      params = {query:q, variables:v}
+      post "/queries", params.to_json, {'ACCEPT' => "application/json", 'CONTENT_TYPE' => 'application/json'}
+      expect(json["data"]["lakes"].length).to eq 1
+    end
+
+  end
+
+  describe "getting lake data from related file" do
+
+    before :each do 
+      LakeData.create(site_id:'NLA06608-0050',visit_no:1,file:'PHab_Metrics_A',data:{'bsFoil'=>0.01})
+      LakeData.create(site_id:'NLA06608-0050',visit_no:2,file:'PHab_Metrics_A',data:{'bsFoil'=>0.02})
+    end
+
+    # it "gets PHab_Metrics_A data for a visit" do 
+    #   q = "query lakeFileData($site_id:ID!,$file:String!,$visit_no:String!) {lake_file_data(site_id: $site_id, file: $file, visit_no: $visit_no){field,value}}"
+    #   v = {
+    #     'site_id'=>'NLA06608-0050',
+    #     'visit_no'=>2,
+    #     'file'=>'PHab_Metrics_A'
+    #   }
+    #   params = {query:q, variables:v}
+    #   post "/queries", params.to_json, {'ACCEPT' => "application/json", 'CONTENT_TYPE' => 'application/json'}
+    #   expect(json["data"]["lake_file_data"].first["field"]).to eq "foo"
+    # end 
+
+    it "gets PHab_Metrics_A data via the visit" do 
+      q = "query search($searchString:String!) {lakes(search_string: $searchString){site_id,lakename,cntyname,st,visits{visit_no,phab_metrics_a{bsfoil}}}}"
+      v = {'searchString'=>'NLA06608-0050'}
       params = {query:q, variables:v}
       post "/queries", params.to_json, {'ACCEPT' => "application/json", 'CONTENT_TYPE' => 'application/json'}
       expect(json["data"]["lakes"].length).to eq 1

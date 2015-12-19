@@ -1,0 +1,87 @@
+/* SVG - Donut */
+.arcLabel {
+  fill: #fff;
+}
+
+/* SVG - Doublebar */
+
+.axis line,
+.axis path, {
+  shape-rendering: crispEdges;
+  fill: transparent;
+  stroke: #555;
+}
+.axis text {
+  font-size: 0.8em;
+}
+
+.bar.left {
+  fill: #ff7f0e;
+  &:hover {
+    fill: #ffbb78;
+}}
+
+.bar.right {
+  fill: #2ca02c;
+  &:hover {
+    fill: #98df8a;
+}}
+
+.xleft.label,
+.xright.label {
+  color: gray;
+}
+
+
+/* SVG - Tree directives */
+
+.node circle {
+  cursor: pointer;
+  fill: #fff;
+  stroke: #8DAB7C;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-size: 11px;
+}
+
+.node .node-collapsed {
+  fill: #eee;
+}
+.node .node-expanded {
+  fill: #8DAB7C;
+}
+
+path.link {
+  fill: none;
+  stroke: #8DAB7C;
+  stroke-width: 1.5px;
+}
+
+.primary, .drillable {
+  font-weight:bold;
+}
+
+.drillable {
+  fill: #436f28;
+  cursor:pointer;
+}
+
+
+/* SVG - Bar chart directives */
+.bar { 
+  fill: rgb(31, 119, 180);
+}
+
+.bar:hover { 
+  fill: rgb(61, 149, 210);
+}
+
+.bar-label { 
+  fill: #eeeeee; /* not 'color' because it is a SVG element */
+}
+
+.bar-value { 
+  fill: #000000; /* not 'color' because it is a SVG element */
+}

@@ -18,11 +18,16 @@ Dir.entries("data").each do |filename|
 		puts "Table: " + table_name
 		
 		CSV.foreach('data/'+filename,:headers => true, ) do |row|
+      # downcase keys in row
+      downcased_row = {}
+      row.to_hash.each_pair do |k,v|
+        downcased_row.merge!({k.downcase => v}) 
+      end
 			ld = LakeData.create(
 					file: table_name,
 					site_id: row["SITE_ID"],
 					visit_no: row["VISIT_NO"].to_i,
-					data: row.to_h
+					data: downcased_row
 				)
 			print "."
 		end

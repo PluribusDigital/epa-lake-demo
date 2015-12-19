@@ -15,7 +15,7 @@ class Lake
   end
 
   def self.substring_search_field(field,string)
-    all.where("lower(data -> ?) LIKE ?",field.upcase,"%#{string.downcase}%").limit(5)
+    all.where("lower(data -> ?) LIKE ?",field.downcase,"%#{string.downcase}%").limit(5)
   end
 
 end

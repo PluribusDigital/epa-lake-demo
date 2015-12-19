@@ -1,9 +1,15 @@
 app.controller("HomeController", 
 	function ($scope, LakeService, $mdDialog, $mdMedia) {
 
-    $scope.lakeData = null;
+    $scope.files = ["Basin_Landuse_Metrics", "Buffer_Landuse_Metrics", "Chemical_ConditionEstimates", "MeanDO_ConditionEstimate", "MeanDO_Data", "PHab_CondtionEstimates", "PHab_IndexValues", "PHab_Metrics_A", "PHab_Metrics_B", "Plankton_OEModel_AnalysisData", "Plankton_OEModel_ConditionEstimates", "Plankton_OEModel_ValidSitesUsed", "Profile", "Recreational_ConditionEstimates", "SampledLakeInformation", "Secchi", "Trophic_ConditionEstimate", "WaterQuality"];
+    $scope.selectedFile = "SampledLakeInformation";
+    $scope.tableData = null;
     $scope.selectedField = null;
     $scope.meta = null;
+    $scope.seriesData = [
+        {label:'foo',value:10},
+        {label:'bar',value:20}
+    ]
     // $scope.selected = [];
 
     // typeahead search
@@ -26,7 +32,7 @@ app.controller("HomeController",
         $mdDialog.show({
           controller: DialogController,
           scope: $scope,
-          templateUrl: 'Home/dialog1.tmpl.html',
+          templateUrl: 'Home/fieldDetailDialog.tmpl.html',
           parent: angular.element(document.body),
           targetEvent: ev,
           clickOutsideToClose:true,
@@ -43,31 +49,38 @@ app.controller("HomeController",
         $mdDialog.hide();
       };
     }
+    getMeta = function (field_name) {
+        LakeService.getMeta(field_name,function(data){
+                $scope.meta = data;
+                console.log($scope.meta.values)
+            }
+        );
+    }
 
     $scope.selectLake = function(item) {
       if (!U.isBlank(item)) {
-        getDetail(item.site_id);
+        LakeService.get(item.site_id, function(data){
+          $scope.tableData = fieldsToTableArray(data);
+          $scope.lake = data;
+        }
+      );
       }
     }
-    getDetail = function (site_id) {
-        LakeService.get(site_id, function(data){
-                // change data from object to array
-                var dataArray = [];
-                angular.forEach(data, function(v, k) {
-                  this.push({name:k,value:v});
-                }, dataArray);
-                $scope.lakeData = dataArray;
-                $scope.lake = data;
-            }
-        );
+
+    $scope.selectFile = function(fileName) {
+      $scope.tableData = fieldsToTableArray($scope.lake.visits[0][fileName.toLowerCase()]);
     }
 
-    getMeta = function (field_name) {
-        LakeService.getMeta(field_name,function(data){
-                $scope.meta = data.data.meta;
-            }
-        );
+    fieldsToTableArray = function(object) {
+      // change data from object to array, friendly format for table
+      var dataArray = [];
+      angular.forEach(object, function(v, k) {
+        this.push({name:k,value:v});
+      }, dataArray);
+      return dataArray;
     }
+
+    
 
     $scope.selectLake({site_id: 'NLA06608-0175'})
 

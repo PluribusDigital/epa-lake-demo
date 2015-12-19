@@ -21,20 +21,37 @@
 </form>
 <!-- /Search Form -->
 
+
 <md-data-table-toolbar>
-  <h2 class="md-title">{{lake.lakename}}</h2>
+  <div layout="row" style="width:100%">
+    <div flex="50">
+      <h2 class="md-title">{{lake.lakename}}</h2>
+    </div>
+    <!-- File dropdown -->
+    <div flex="40">
+      <md-input-container>
+        <label>File</label>
+        <md-select ng-model="selectedFile" ng-change="selectFile(selectedFile)">
+          <md-option ng-repeat="file in files" value="{{file}}">
+            {{file}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+
+  </div>
 </md-data-table-toolbar>
 
 <md-data-table-container>
   <table md-data-table md-progress="deferred">
     <thead md-order="table.order" md-trigger="onOrderChange">
       <tr>
-        <th name="Field" order-by="field"></th>
-        <th name="Value" order-by="value"></th>
+        <th name="Field"></th>
+        <th name="Value"></th>
       </tr>
     </thead>
     <tbody>
-      <tr md-auto-select ng-repeat="field in lakeData"  ng-click="selectField(field.name,$event)">
+      <tr md-auto-select ng-repeat="field in tableData"  ng-click="selectField(field.name,$event)">
         <td>{{field.name}}</td>
         <td>{{field.value}}</td>
       </tr>

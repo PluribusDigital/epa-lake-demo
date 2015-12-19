@@ -1,0 +1,36 @@
+<md-dialog aria-label="{{meta.field_name}} ({{meta.type}})" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          {{meta.field_name}} ({{meta.type}})
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="hide()">
+          close
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <p>Value for {{lake.lakename}}: <strong>{{lake[selectedField]}}</strong></p>
+        <p>Values for other lakes:</p>
+        <table style="width:100%">
+          <tr ng-show="!U.isBlank(meta.values.min)">
+            <th align="left">Minimum</th>
+            <td align="right">{{meta.values.min | roundFloat }}</td>
+          </tr>
+          <tr ng-show="!U.isBlank(meta.values.avg)">
+            <th align="left">Average</th>
+            <td align="right">{{meta.values.avg | roundFloat }}</td>
+          </tr>
+          <tr ng-show="!U.isBlank(meta.values.max)">
+            <th align="left">Maximum</th>
+            <td align="right">{{meta.values.max | roundFloat }}</td>
+          </tr>
+        </table>
+        <div barChart series="meta.values.counts" style="margin:5px;"></div>
+      </div>
+    </md-dialog-content>
+  </form>
+</md-dialog>

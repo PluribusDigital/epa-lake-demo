@@ -16,8 +16,18 @@ class LakeData < ActiveRecord::Base
     set.where "data -> ? = ? ", key, value
   end
 
+  def self.data_for_file(site_id,file,visit_no)
+    result = LakeData.where(site_id:site_id,file:file,visit_no:visit_no)
+    return result.first ? OpenStruct.new(result.first.data) : nil
+  end
+
   def method_missing(method_sym, *arguments, &block)
-    data[method_sym.to_s.upcase]
+    data[method_sym.to_s.downcase]
+  end
+
+  def visits
+    [Visit.new(site_id,1),
+     Visit.new(site_id,2)]
   end
 
 end

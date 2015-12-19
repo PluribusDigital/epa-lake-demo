@@ -1,6 +1,6 @@
 LakeType = GraphQL::ObjectType.define do
   name "Lake"
-  description "A lake surveyed by EPA"
+  field :visits,types[VisitType], "Visits for the survey"
   field :site_id, !types.ID, "The unique ID for the lake, or SITE_ID in EPA terms"
   field :lakename, !types.String, "Name of lake"
   field :epa_reg, !types.String, "EPA region jurisdiction"
