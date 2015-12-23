@@ -24,14 +24,15 @@ app.controller("HomeController",
         return promise;
     };  
 
-    $scope.selectField = function(field_name,ev) {
-        getMeta(field_name);
+    $scope.selectField = function (field_name, ev) {
+        $scope.getMeta(field_name);
         $scope.selectedField = field_name;
         $scope.dialogFullscreen = $mdMedia('xs') || $mdMedia('sm');
         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.dialogFullscreen;
         $mdDialog.show({
           controller: DialogController,
           scope: $scope,
+          preserveScope: true,
           templateUrl: 'Home/fieldDetailDialog.tmpl.html',
           parent: angular.element(document.body),
           targetEvent: ev,
@@ -49,7 +50,9 @@ app.controller("HomeController",
         $mdDialog.hide();
       };
     }
-    getMeta = function (field_name) {
+
+    $scope.getMeta = function (field_name) {
+        $scope.meta = null;  // Make sure bindings do not show old data
         LakeService.getMeta(field_name,function(data){
                 $scope.meta = data;
                 console.log($scope.meta.values)
@@ -60,7 +63,7 @@ app.controller("HomeController",
     $scope.selectLake = function(item) {
       if (!U.isBlank(item)) {
         LakeService.get(item.site_id, function(data){
-          $scope.tableData = fieldsToTableArray(data);
+          $scope.tableData = $scope.fieldsToTableArray(data);
           $scope.lake = data;
         }
       );
@@ -68,10 +71,10 @@ app.controller("HomeController",
     }
 
     $scope.selectFile = function(fileName) {
-      $scope.tableData = fieldsToTableArray($scope.lake.visits[0][fileName.toLowerCase()]);
+      $scope.tableData = $scope.fieldsToTableArray($scope.lake.visits[0][fileName.toLowerCase()]);
     }
 
-    fieldsToTableArray = function(object) {
+    $scope.fieldsToTableArray = function(object) {
       // change data from object to array, friendly format for table
       var dataArray = [];
       angular.forEach(object, function(v, k) {
