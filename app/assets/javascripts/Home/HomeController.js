@@ -49,6 +49,9 @@ app.controller("HomeController",
       $scope.hide = function() {
         $mdDialog.hide();
       };
+
+      // The global scope `U` is not available for binding in the HTML, but this way it is
+      angular.extend($scope, U);
     }
 
     $scope.getMeta = function (field_name) {

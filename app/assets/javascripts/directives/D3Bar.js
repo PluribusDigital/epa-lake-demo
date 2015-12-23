@@ -26,7 +26,8 @@ app.controller('D3BarController', function ($scope) {
      */
 
     $scope.BAR_HEIGHT = 25;
-    $scope.MAX_COUNT_MARGIN = 20;
+    $scope.MIN_LABEL_SIZE = 20;
+    $scope.LABEL_MARGIN = 2;
 
     $scope.xScale = d3.scale.linear();
     $scope.yScale = d3.scale.ordinal();
@@ -95,15 +96,19 @@ app.controller('D3BarController', function ($scope) {
         var width = node.clientWidth;
         var height = ($scope.data.length == 0) ? node.clientHeight : $scope.data.length * $scope.BAR_HEIGHT;
 
+        // Get the maximum value size
+        maxValue = d3.max($scope.data, function (d) { return d.value; });
+        requiredValueWidth = Math.max($scope.textWidth(maxValue), $scope.MIN_LABEL_SIZE);
+
         // 'scale' = The size of the viewport/window
-        $scope.xScale.range([0, width - $scope.MAX_COUNT_MARGIN]);
+        $scope.xScale.range([0, width - requiredValueWidth - $scope.LABEL_MARGIN]);
         $scope.yScale.rangeRoundBands([0, height], 0.2);
 
         $scope.xAxis.scale($scope.xScale);
         $scope.yAxis.scale($scope.yScale);
 
         // 'domain' = The values to display in the viewport/window
-        $scope.xScale.domain([0, d3.max($scope.data, function (d) { return d.value; })]);
+        $scope.xScale.domain([0, maxValue]);
         $scope.yScale.domain($scope.data.map(function (d) { return d.label; }));
 
         // Start building the chart
@@ -113,6 +118,10 @@ app.controller('D3BarController', function ($scope) {
 
         // Remove the old elements
         svg.selectAll("*").remove();
+
+        // Early exit
+        if (width <= 1 || height <= 1)
+            return
 
         // Start the enumeration/bind of the data
         var inserts = svg.append("g")
@@ -129,7 +138,7 @@ app.controller('D3BarController', function ($scope) {
                .attr("height", $scope.barHeight)
                .call($scope.postCreateElement);               
 
-        var yOffset = $scope.yScale.rangeBand() - 4;
+        var yOffset = $scope.yScale.rangeBand() - ($scope.LABEL_MARGIN * 2);
 
         // Draw the label inside the bars
         inserts.append("text")
@@ -163,7 +172,8 @@ app.controller('D3BarController', function ($scope) {
     };
 
     $scope.onClick = function (d) {
-        $scope.clickTarget()(d.label);
+        if( $scope.clickTarget != null )
+            $scope.clickTarget(d.label);
     }
 });
 
