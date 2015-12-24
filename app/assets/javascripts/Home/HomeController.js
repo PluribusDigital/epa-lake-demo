@@ -45,6 +45,7 @@ app.controller("HomeController",
           $scope.dialogFullscreen = (wantsFullScreen === true);
         });
     }
+
     function DialogController($scope, $mdDialog) {
       $scope.hide = function() {
         $mdDialog.hide();
@@ -58,7 +59,7 @@ app.controller("HomeController",
         $scope.meta = null;  // Make sure bindings do not show old data
         LakeService.getMeta(field_name,function(data){
                 $scope.meta = data;
-                console.log($scope.meta.values)
+                console.log("Meta", $scope.meta.values)
             }
         );
     }
@@ -85,8 +86,6 @@ app.controller("HomeController",
       }, dataArray);
       return dataArray;
     }
-
-    
 
     $scope.selectLake({site_id: 'NLA06608-0175'})
 
