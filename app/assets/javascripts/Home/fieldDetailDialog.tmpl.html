@@ -16,20 +16,22 @@
         <p>Value for {{lake.lakename}}: <strong>{{lake[selectedField]}}</strong></p>
         <p>Values for other lakes:</p>
         <table style="width:100%">
-          <tr ng-show="!U.isBlank(meta.values.min)">
+          <tr ng-show="isNumber(meta.values.min)">
             <th align="left">Minimum</th>
             <td align="right">{{meta.values.min | roundFloat }}</td>
           </tr>
-          <tr ng-show="!U.isBlank(meta.values.avg)">
+          <tr ng-show="isNumber(meta.values.avg)">
             <th align="left">Average</th>
             <td align="right">{{meta.values.avg | roundFloat }}</td>
           </tr>
-          <tr ng-show="!U.isBlank(meta.values.max)">
+          <tr ng-show="isNumber(meta.values.max)">
             <th align="left">Maximum</th>
             <td align="right">{{meta.values.max | roundFloat }}</td>
           </tr>
         </table>
-        <div barChart series="meta.values.counts" style="margin:5px;"></div>
+          <div ng-show="meta.values.counts.length > 0">
+            <div barChart series="meta.values.counts" style="margin:5px;"></div>
+          </div>
       </div>
     </md-dialog-content>
   </form>

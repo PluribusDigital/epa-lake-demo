@@ -45,17 +45,21 @@ app.controller("HomeController",
           $scope.dialogFullscreen = (wantsFullScreen === true);
         });
     }
+
     function DialogController($scope, $mdDialog) {
       $scope.hide = function() {
         $mdDialog.hide();
       };
+
+      // The global scope `U` is not available for binding in the HTML, but this way it is
+      angular.extend($scope, U);
     }
 
     $scope.getMeta = function (field_name) {
         $scope.meta = null;  // Make sure bindings do not show old data
         LakeService.getMeta(field_name,function(data){
                 $scope.meta = data;
-                console.log($scope.meta.values)
+                console.log("Meta", $scope.meta.values)
             }
         );
     }
@@ -82,8 +86,6 @@ app.controller("HomeController",
       }, dataArray);
       return dataArray;
     }
-
-    
 
     $scope.selectLake({site_id: 'NLA06608-0175'})
 

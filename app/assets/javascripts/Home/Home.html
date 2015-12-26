@@ -1,13 +1,13 @@
 ﻿<!-- Search Form -->
 <form ng-submit="$event.preventDefault()">
-  <md-autocomplete
-      md-selected-item="selectedItem"
-      md-search-text="searchText"
-      md-items="item in search(searchText)"
-      md-selected-item-change="selectLake(item)"
-      md-item-text="item.lakename"
-      md-min-length="0"
-      placeholder="Find a lake by its name">
+    <md-autocomplete
+        md-selected-item="selectedItem"
+        md-search-text="searchText"
+        md-items="item in search(searchText)"
+        md-selected-item-change="selectLake(item)"
+        md-item-text="item.lakename"
+        md-min-length="0"
+        placeholder="Find a lake by its name">
     <md-item-template>
       <span md-highlight-text="searchText" md-highlight-flags="^i">
         {{item.lakename}} - {{item.cntyname}}, {{item.st}} 
@@ -21,40 +21,41 @@
 </form>
 <!-- /Search Form -->
 
+<div layout-gt-sm="row" layout="column">
+    <div flex="33">
 
-<md-data-table-toolbar>
-  <div layout="row" style="width:100%">
-    <div flex="50">
-      <h2 class="md-title">{{lake.lakename}}</h2>
+        <h2 flex class="md-title">{{lake.lakename}}</h2>
+
+        <div flex google-map zoom="12" lat="{{lake.lat_dd}}" lng="{{lake.lon_dd}}" center-pin="true" style="height:20em;">
+        </div>
+
+        <!-- File dropdown -->
+        <div flex>
+            <md-input-container>
+            <label>File</label>
+            <md-select ng-model="selectedFile" ng-change="selectFile(selectedFile)">
+                <md-option ng-repeat="file in files" value="{{file}}">
+                {{file}}
+                </md-option>
+            </md-select>
+            </md-input-container>
+        </div>
     </div>
-    <!-- File dropdown -->
-    <div flex="40">
-      <md-input-container>
-        <label>File</label>
-        <md-select ng-model="selectedFile" ng-change="selectFile(selectedFile)">
-          <md-option ng-repeat="file in files" value="{{file}}">
-            {{file}}
-          </md-option>
-        </md-select>
-      </md-input-container>
-    </div>
 
-  </div>
-</md-data-table-toolbar>
-
-<md-data-table-container>
-  <table md-data-table md-progress="deferred">
-    <thead md-order="table.order" md-trigger="onOrderChange">
-      <tr>
-        <th name="Field"></th>
-        <th name="Value"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr md-auto-select ng-repeat="field in tableData"  ng-click="selectField(field.name,$event)">
-        <td>{{field.name}}</td>
-        <td>{{field.value}}</td>
-      </tr>
-    </tbody>
-  </table>
-</md-data-table-container>
+    <md-data-table-container flex="66">
+      <table md-data-table md-progress="deferred">
+        <thead md-order="table.order" md-trigger="onOrderChange">
+          <tr>
+            <th name="Field"></th>
+            <th name="Value"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr md-auto-select ng-repeat="field in tableData"  ng-click="selectField(field.name,$event)">
+            <td>{{field.name}}</td>
+            <td>{{field.value}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </md-data-table-container>
+</div>
