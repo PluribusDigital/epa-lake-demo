@@ -1,4 +1,15 @@
-﻿<!-- Search Form -->
+﻿   <!-- Toolbar top -->
+    <md-toolbar layout="row">
+      <div class="md-toolbar-tools">
+        <h1>EPA | <strong>NLA Data Explorer</strong></h1>
+        <span flex></span>
+        <md-button aria-label="About" ng-click="aboutShow()">
+          About
+        </md-button>
+      </div>
+    </md-toolbar>
+
+<!-- Search Form -->
 <form ng-submit="$event.preventDefault()">
     <md-autocomplete
         md-selected-item="selectedItem"
@@ -21,11 +32,12 @@
 </form>
 <!-- /Search Form -->
 
-<div layout-gt-sm="row" layout="column">
+<div layout-gt-sm="row" layout="column" layout-padding>
     <div flex="33">
 
         <h2 flex class="md-title">{{lake.lakename}}</h2>
 
+        <!-- Map -->
         <div flex google-map zoom="12" lat="{{lake.lat_dd}}" lng="{{lake.lon_dd}}" center-pin="true" style="height:20em;">
         </div>
 
@@ -42,20 +54,23 @@
         </div>
     </div>
 
-    <md-data-table-container flex="66">
-      <table md-data-table md-progress="deferred">
-        <thead md-order="table.order" md-trigger="onOrderChange">
-          <tr>
-            <th name="Field"></th>
-            <th name="Value"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr md-auto-select ng-repeat="field in tableData"  ng-click="selectField(field.name,$event)">
-            <td>{{field.name}}</td>
-            <td>{{field.value}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </md-data-table-container>
+    <div flex="50">
+        <!-- Table of values -->
+        <md-data-table-container flex="66">
+          <table md-data-table md-progress="deferred">
+            <thead md-order="table.order" md-trigger="onOrderChange">
+              <tr>
+                <th name="Field"></th>
+                <th name="Value"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr md-auto-select ng-repeat="field in tableData"  ng-click="selectField(field.name,$event)">
+                <td><em>{{field.name}}</em></td>
+                <td>{{field.value}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </md-data-table-container>
+    </div>
 </div>

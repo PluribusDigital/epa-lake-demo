@@ -46,6 +46,24 @@ app.controller("HomeController",
         });
     }
 
+    $scope.aboutShow = function (ev) {
+        $scope.dialogFullscreen = $mdMedia('xs') || $mdMedia('sm');
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.dialogFullscreen;
+        $mdDialog.show({
+          controller: DialogController,
+          templateUrl: 'Home/aboutDialog.tmpl.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true,
+          fullscreen: useFullScreen
+        })
+        $scope.$watch(function() {
+          return $mdMedia('xs') || $mdMedia('sm');
+        }, function(wantsFullScreen) {
+          $scope.dialogFullscreen = (wantsFullScreen === true);
+        });
+    }
+
     function DialogController($scope, $mdDialog) {
       $scope.hide = function() {
         $mdDialog.hide();
@@ -82,7 +100,9 @@ app.controller("HomeController",
       // change data from object to array, friendly format for table
       var dataArray = [];
       angular.forEach(object, function(v, k) {
-        this.push({name:k,value:v});
+        if (k !== "visits") { 
+          this.push({name:k,value:v});
+        }
       }, dataArray);
       return dataArray;
     }
