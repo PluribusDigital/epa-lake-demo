@@ -1,0 +1,61 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "postgres-data",
+      "host": {
+        "sourcePath": "/var/lib/postgresql/data"
+      }
+    }
+  ],
+  "authentication": {
+    "bucket": "open-fda",
+    "key": "dockercfg"
+  },
+  "containerDefinitions": [
+    {
+      "name": "postgres",
+      "image": "postgres:9.4",
+      "environment": [
+        {
+          "name": "POSTGRES_USER",
+          "value": "<POSTGRES_USER>"
+        },
+        {
+          "name": "POSTGRES_PASSWORD",
+          "value": "<POSTGRES_PASSWORD>"
+        }
+      ],
+      "essential": true,
+      "memory": 1536,
+      "mountPoints": [
+        {
+          "sourceVolume": "postgres-data",
+          "containerPath": "/var/lib/postgresql/data",
+          "readOnly": false
+        }
+      ]
+    },
+    {
+      "name": "fda-sandbox-web",
+      "image": "<ORG>/<DOCKER_PROJECT>:<TAG>",
+      "environment": [
+        {
+          "name": "RAILS_ENV",
+          "value": "demo"
+        }
+      ],
+      "essential": true,
+      "memory": 1536,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "postgres"
+      ]
+    }
+  ]
+}
