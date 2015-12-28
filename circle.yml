@@ -35,4 +35,3 @@ deployment:
     - pip install awscli
     # deploy to AWS elastic beanstalk environment
     - bash aws s3 cp $DOCKERRUN_FILE.zip s3://open-fda/$EB_ENV/Dockerrun.aws.json.template
-        timeout: 1800
