@@ -11,17 +11,13 @@ machine:
     EB_ENV: epa-lake-demo
 
 dependencies:
-  pre:
-    # python setup
-    #- cd gruve && python setup.py develop
   post:
     - bundle exec rake bower:install
 
 test:
   override:
    - bundle exec rspec -t smoke
-   - bundle exec rake teaspoon
-   #- cd gruve && python setup.py test
+   #- bundle exec rake teaspoon
 
 deployment:
   demo:
