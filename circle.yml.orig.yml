@@ -29,6 +29,7 @@ deployment:
     - git checkout -- .
     # build docker image
     - docker info
+        timeout: 1800
     # push docker image
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
     # install aws command line tools for elasticbean stalk deployment
