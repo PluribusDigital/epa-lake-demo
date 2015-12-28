@@ -34,4 +34,4 @@ deployment:
     # install aws command line tools for elasticbean stalk deployment
     - pip install awscli
     # deploy to AWS elastic beanstalk environment
-    - bash aws s3 cp Dockerrun.aws.json.template s3://open-fda/Dockerrun.aws.json.template
+    - bash aws s3 cp Dockerrun.aws.json.template s3://open-fda
