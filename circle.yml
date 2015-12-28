@@ -11,10 +11,11 @@ machine:
     EB_ENV: epa-lake-demo
 
 dependencies:
-  post:
-    #- bundle exec rake bower:install
+  pre:
     # install aws command line tools for elasticbean stalk deployment
     - pip install awscli
+    - bundle exec rake bower:install
+  post:
     # restore docker images from cache
     - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
 
@@ -42,5 +43,5 @@ deployment:
     # deploy to AWS elastic beanstalk environment
     #- bash aws_deploy.sh $CIRCLE_BUILD_NUM $DOCKER_PROJECT $ORG $EB_ENV:
     #    timeout: 1800
-    - bash aws --version
-    - bash aws s3 cp Dockerrun.aws.json.template s3://$EB_BUCKET
+    - aws --version
+    - aws s3 cp Dockerrun.aws.json.template s3://$EB_BUCKET
