@@ -34,9 +34,9 @@ WORKDIR /home/app/webapp
 RUN bundle install --without development test
 
 #   Run python setup
-RUN apt-get -y -q install python3-setuptools
-WORKDIR /home/app/webapp/gruve
-RUN python3 setup.py develop
+#RUN apt-get -y -q install python3-setuptools
+#WORKDIR /home/app/webapp/gruve
+#RUN python3 setup.py develop
 
 #   Install npm
 WORKDIR /home/app/webapp
