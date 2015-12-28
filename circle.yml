@@ -36,5 +36,5 @@ deployment:
     # install aws command line tools for elasticbean stalk deployment
     - pip install awscli
     # deploy to AWS elastic beanstalk environment
-    - bash aws_deploy.sh $CIRCLE_BUILD_NUM $DOCKER_PROJECT $ORG $EB_ENV:
-        timeout: 1800
+    #- bash aws_deploy.sh $CIRCLE_BUILD_NUM $DOCKER_PROJECT $ORG $EB_ENV:
+    #    timeout: 1800
