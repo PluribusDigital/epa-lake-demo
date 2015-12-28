@@ -14,3 +14,7 @@ md-select {
 .padded-content {
   padding: 10px;
 }
+
+md-card > img.logo, md-card > :not(md-card-content) img.logo {
+  width: 200px !important;
+}

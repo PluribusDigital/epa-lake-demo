@@ -17,6 +17,17 @@
         <!-- Search -->
         <div><ng-include src="'Home/searchForm.html'"></div>
 
+        <!-- Placeholder -->
+        <md-whiteframe ng-show="!lake" class="md-whiteframe-3dp" layout layout-align="center center" layout-margin style="margin-top:20px; background:#fff; color: #333">
+          <div class="padded-content">
+          <h1>
+            <i class="mdi mdi-arrow-up-bold-circle"></i> Get Started
+          </h1>
+          <p>Search for a lake by name to see its assessment data.</p>
+          </div>
+        </md-whiteframe>
+        
+
         <div ng-show="lake">
           <h2 flex class="md-title">{{lake.lakename}}</h2>
           <p>
@@ -43,6 +54,29 @@
             </md-select>
             </md-input-container>
         </div>
+
+
+        <!-- Placeholder -->
+        <md-whiteframe ng-show="!lake" class="md-whiteframe-3dp" layout layout-align="center center" layout-margin style="background:#fff; color: #333">
+          <div class="padded-content">
+            <h3>
+              <i class="mdi mdi-arrow-up-bold-circle"></i> 
+              Explore the Data
+            </h3>
+            <p>Once you've selected a lake, select a data file to view.
+              <br> Click on values to gain additional context.</p>
+            <img src="lakeshore.png" class="md-card-image" alt="A Lake Shore" style="width: 100%;" />
+            <div  layout="row" layout-padding layout-align="start center">
+              <div flex="none">
+                <img src="stsi_logo_200.png" class="logo" alt="STSI Logo" width="150" height="49"> 
+              </div>
+              <div flex class="muted">
+                This prototpye application was created by <a href="http://stsiinc.com" target="_blank">STSI</a> in response to a Request for Information put out by the US Environmental Protection Agency.
+              </div>
+            </div>
+          </div>
+        </md-whiteframe>
+
         <!-- Table of values -->
         <md-data-table-container flex="66">
           <table md-data-table md-progress="deferred" ng-show="lake">
