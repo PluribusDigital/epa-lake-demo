@@ -1,7 +1,7 @@
 app.controller("HomeController", 
 	function ($scope, LakeService, $mdDialog, $mdMedia) {
 
-    $scope.files = ["Basin_Landuse_Metrics", "Buffer_Landuse_Metrics", "Chemical_ConditionEstimates", "MeanDO_ConditionEstimate", "MeanDO_Data", "PHab_CondtionEstimates", "PHab_IndexValues", "PHab_Metrics_A", "PHab_Metrics_B", "Plankton_OEModel_AnalysisData", "Plankton_OEModel_ConditionEstimates", "Plankton_OEModel_ValidSitesUsed", "Profile", "Recreational_ConditionEstimates", "SampledLakeInformation", "Secchi", "Trophic_ConditionEstimate", "WaterQuality"];
+    $scope.files = ["Basin_Landuse_Metrics", "Buffer_Landuse_Metrics", "Chemical_ConditionEstimates", "PHab_IndexValues", "PHab_Metrics_A", "PHab_Metrics_B", "Plankton_OEModel_AnalysisData", "SampledLakeInformation", "WaterQuality"];
     $scope.selectedFile = "SampledLakeInformation";
     $scope.tableData = null;
     $scope.selectedField = null;
@@ -107,6 +107,6 @@ app.controller("HomeController",
       return dataArray;
     }
 
-    $scope.selectLake({site_id: 'NLA06608-0175'})
+    // $scope.selectLake({site_id: 'NLA06608-0175'})
 
 });

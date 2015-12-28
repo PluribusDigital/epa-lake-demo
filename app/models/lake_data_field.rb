@@ -24,7 +24,7 @@ class LakeDataField < ActiveRecord::Base
 
   def self.translate_to_graphql_type(type)
     return "Float"   if type == "float"
-    return "Integer" if type == "integer"
+    return "Int"     if type == "integer"
     return "String" 
   end
 

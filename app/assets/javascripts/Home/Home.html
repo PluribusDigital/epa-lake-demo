@@ -1,50 +1,41 @@
-﻿   <!-- Toolbar top -->
-    <md-toolbar layout="row">
-      <div class="md-toolbar-tools">
-        <h1>EPA | <strong>NLA Data Explorer</strong></h1>
-        <span flex></span>
-        <md-button aria-label="About" ng-click="aboutShow()">
-          About
-        </md-button>
-      </div>
-    </md-toolbar>
+﻿<!-- Toolbar top -->
+<md-toolbar layout="row">
+  <div class="md-toolbar-tools">
+    <h1>EPA | <strong>NLA Data Explorer</strong></h1>
+    <span flex></span>
+    <md-button class="md-primary md-button" aria-label="About" ng-click="aboutShow()">
+      About
+    </md-button>
+  </div>
+</md-toolbar>
 
-<!-- Search Form -->
-<form ng-submit="$event.preventDefault()">
-    <md-autocomplete
-        md-selected-item="selectedItem"
-        md-search-text="searchText"
-        md-items="item in search(searchText)"
-        md-selected-item-change="selectLake(item)"
-        md-item-text="item.lakename"
-        md-min-length="0"
-        placeholder="Find a lake by its name">
-    <md-item-template>
-      <span md-highlight-text="searchText" md-highlight-flags="^i">
-        {{item.lakename}} - {{item.cntyname}}, {{item.st}} 
-        ({{item.site_id}})
-      </span>
-    </md-item-template>
-    <md-not-found>
-      No lakes matching "{{searchText}}" were found.
-    </md-not-found>
-  </md-autocomplete>
-</form>
-<!-- /Search Form -->
+<div layout-gt-sm="row" layout="column">
 
-<div layout-gt-sm="row" layout="column" layout-padding>
-    <div flex="33">
+    <!-- Left column -->
+    <div flex="33" class="sidebar padded-content">
 
-        <h2 flex class="md-title">{{lake.lakename}}</h2>
+        <!-- Search -->
+        <div><ng-include src="'Home/searchForm.html'"></div>
 
-        <!-- Map -->
-        <div flex google-map zoom="12" lat="{{lake.lat_dd}}" lng="{{lake.lon_dd}}" center-pin="true" style="height:20em;">
-        </div>
+        <div ng-show="lake">
+          <h2 flex class="md-title">{{lake.lakename}}</h2>
+          <p>
+            {{lake.cntyname | titleCase}} County, {{lake.st}}<br>
+            Site ID: {{lake.site_id}}
+          </p>
+          <!-- Map -->
+          <div flex google-map zoom="12" lat="{{lake.lat_dd}}" lng="{{lake.lon_dd}}" center-pin="true" style="height:20em;">
+          </div>
+        </div>     
 
+    </div>
+
+    <!-- Right column -->
+    <div flex="66" class="padded-content">
         <!-- File dropdown -->
-        <div flex>
+        <div>
             <md-input-container>
-            <label>File</label>
+            <label>Data File</label>
             <md-select ng-model="selectedFile" ng-change="selectFile(selectedFile)">
                 <md-option ng-repeat="file in files" value="{{file}}">
                 {{file}}
@@ -52,12 +43,9 @@
             </md-select>
             </md-input-container>
         </div>
-    </div>
-
-    <div flex="50">
         <!-- Table of values -->
         <md-data-table-container flex="66">
-          <table md-data-table md-progress="deferred">
+          <table md-data-table md-progress="deferred" ng-show="lake">
             <thead md-order="table.order" md-trigger="onOrderChange">
               <tr>
                 <th name="Field"></th>
@@ -73,4 +61,5 @@
           </table>
         </md-data-table-container>
     </div>
-</div>
+
+</div> <!-- /layout columns -->
