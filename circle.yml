@@ -14,8 +14,8 @@ dependencies:
   pre:
     # install aws command line tools for elasticbean stalk deployment
     - pip install awscli
-    - bundle exec rake bower:install
   post:
+    #- bundle exec rake bower:install
     # restore docker images from cache
     - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
 
