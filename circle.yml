@@ -1,0 +1,44 @@
+machine:
+  timezone:
+    America/New_York
+  python:
+    version: 3.4.2
+  services:
+    - docker
+  environment:
+    DOCKER_PROJECT: epa-lake-demo-web
+    ORG: stsilabs
+    EB_ENV: epa-lake-demo
+
+dependencies:
+  pre:
+    # python setup
+    - cd gruve && python setup.py develop
+  post:
+    - bundle exec rake bower:install
+
+test:
+  override:
+   - bundle exec rspec -t smoke
+   - bundle exec rake teaspoon
+   #- cd gruve && python setup.py test
+
+deployment:
+  demo:
+    branch: master
+    commands:
+    # revert any changes circleci may have made during dependency installs and testing
+    - git clean -df
+    - git checkout -- .
+    # build docker image
+    - docker info
+    - docker build -t $ORG/$DOCKER_PROJECT:$CIRCLE_BUILD_NUM .:
+        timeout: 1800
+    # push docker image
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - docker push $ORG/$DOCKER_PROJECT:$BUILD_TAG
+    # install aws command line tools for elasticbean stalk deployment
+    - pip install awscli
+    # deploy to AWS elastic beanstalk environment
+    - bash aws_deploy.sh $CIRCLE_BUILD_NUM $DOCKER_PROJECT $ORG $EB_ENV:
+        timeout: 1800
