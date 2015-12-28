@@ -29,13 +29,13 @@ deployment:
     - git checkout -- .
     # build docker image
     - docker info
-    # tmp- docker build -t $ORG/$DOCKER_PROJECT:$CIRCLE_BUILD_NUM .:
+    # tmp  docker build -t $ORG/$DOCKER_PROJECT:$CIRCLE_BUILD_NUM .:
         timeout: 1800
     # push docker image
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
-    # tmp- docker push $ORG/$DOCKER_PROJECT:$BUILD_TAG
+    # tmp  docker push $ORG/$DOCKER_PROJECT:$BUILD_TAG
     # cache docker image for future circleci builds
-    # tmp- mkdir -p ~/docker; docker save stsilabs/epa-lake-demo-web > ~/docker/image.tar
+    # tmp  mkdir -p ~/docker; docker save stsilabs/epa-lake-demo-web > ~/docker/image.tar
     # install aws command line tools for elasticbean stalk deployment
     - pip install awscli
     # deploy to AWS elastic beanstalk environment
