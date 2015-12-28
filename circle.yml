@@ -12,12 +12,15 @@ machine:
 
 dependencies:
   post:
-    - bundle exec rake bower:install
+    #- bundle exec rake bower:install
+    # install aws command line tools for elasticbean stalk deployment
+    - pip install awscli
+    # restore docker images from cache
     - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
 
 test:
   override:
-   - bundle exec rspec -t smoke
+   #- bundle exec rspec -t smoke
    #- bundle exec rake teaspoon
 
 deployment:
@@ -28,17 +31,16 @@ deployment:
     - git clean -df
     - git checkout -- .
     # build docker image
-    - docker info
-    - docker build -t $ORG/$DOCKER_PROJECT:$CIRCLE_BUILD_NUM .:
-        timeout: 1800
+    #- docker info
+    #- docker build -t $ORG/$DOCKER_PROJECT:$CIRCLE_BUILD_NUM .:
+    #    timeout: 1800
     # push docker image
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - docker push $ORG/$DOCKER_PROJECT:$BUILD_TAG
+    #- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
+    #- docker push $ORG/$DOCKER_PROJECT:$BUILD_TAG
     # cache docker image for future circleci builds
-    - mkdir -p ~/docker; docker save stsilabs/epa-lake-demo-web > ~/docker/image.tar
-    # install aws command line tools for elasticbean stalk deployment
-    - pip install awscli
+    #- mkdir -p ~/docker; docker save stsilabs/epa-lake-demo-web > ~/docker/image.tar
     # deploy to AWS elastic beanstalk environment
-    - bash aws s3 cp $DOCKERRUN_FILE.zip s3://open-fda/$EB_ENV/Dockerrun.aws.json.template
-    - bash aws_deploy.sh $CIRCLE_BUILD_NUM $DOCKER_PROJECT $ORG $EB_ENV:
-        timeout: 1800
+    #- bash aws_deploy.sh $CIRCLE_BUILD_NUM $DOCKER_PROJECT $ORG $EB_ENV:
+    #    timeout: 1800
+    -bash aws --version
+    -bash aws s3 cp Dockerrun.aws.json.template s3://$EB_BUCKET
