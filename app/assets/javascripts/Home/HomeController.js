@@ -6,11 +6,6 @@ app.controller("HomeController",
     $scope.tableData = null;
     $scope.selectedField = null;
     $scope.meta = null;
-    $scope.seriesData = [
-        {label:'foo',value:10},
-        {label:'bar',value:20}
-    ]
-    // $scope.selected = [];
 
     // typeahead search
     $scope.searchPlaceholder = "Find a lake by name"
@@ -77,7 +72,6 @@ app.controller("HomeController",
         $scope.meta = null;  // Make sure bindings do not show old data
         LakeService.getMeta(field_name,function(data){
                 $scope.meta = data;
-                console.log("Meta", $scope.meta.values)
             }
         );
     }
@@ -85,28 +79,24 @@ app.controller("HomeController",
     $scope.selectLake = function(item) {
       if (!U.isBlank(item)) {
         LakeService.get(item.site_id, function(data){
-          $scope.tableData = $scope.fieldsToTableArray(data);
           $scope.lake = data;
+          // load in the selected file for thisn new lake
+          $scope.selectFile($scope.selectedFile);
         }
       );
       }
     }
 
     $scope.selectFile = function(fileName) {
-      $scope.tableData = $scope.fieldsToTableArray($scope.lake.visits[0][fileName.toLowerCase()]);
-    }
-
-    $scope.fieldsToTableArray = function(object) {
-      // change data from object to array, friendly format for table
-      var dataArray = [];
-      angular.forEach(object, function(v, k) {
+      $scope.fileData = $scope.lake.visits[0][fileName.toLowerCase()];
+      $scope.tableData = [];
+      angular.forEach($scope.fileData, function(v, k) {
         if (k !== "visits") { 
-          this.push({name:k,value:v});
+          $scope.tableData.push({name:k,value:v});
         }
-      }, dataArray);
-      return dataArray;
+      });
     }
 
-    // $scope.selectLake({site_id: 'NLA06608-0175'})
+    $scope.selectLake({site_id: 'NLA06608-0045'})
 
 });

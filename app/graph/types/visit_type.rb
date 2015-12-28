@@ -2,6 +2,7 @@ VisitType = GraphQL::ObjectType.define do
   name "Visit"
   description "Visit number for the survey (1 or 2)"
   field :visit_no, !types.Int, 'Visit number'
+  field :sampledlakeinformation, SampledLakeInformationType, 'overall information about the sampled lake'
   field :basin_landuse_metrics, BasinLanduseMetricsType, 'data for basin_landuse_metrics'
   field :buffer_landuse_metrics, BufferLanduseMetricsType, 'data for buffer_landuse_metrics'
   field :chemical_conditionestimates, ChemicalConditionEstimatesType, 'data for chemical_conditionestimates'

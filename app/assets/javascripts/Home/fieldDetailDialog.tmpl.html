@@ -14,7 +14,7 @@
     <md-dialog-content>
       <div class="md-dialog-content">
         <div class="muted"><small><strong>Definition: </strong>This is a placeholder for the data definition. One goal of this prototype is to convey value to data owners within EPA, and collaborate with them to make these definitions (and other field metadata) available as data and in the application.</small></div>
-        <p>Value for {{lake.lakename}}: <strong>{{lake[selectedField]}}</strong></p>
+        <p>Value for {{lake.lakename}}: <strong>{{fileData[selectedField]}}</strong></p>
         <p>Values for other lakes:</p>
         <table style="width:100%">
           <tr ng-show="isNumber(meta.values.min)">
