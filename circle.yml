@@ -20,7 +20,7 @@ dependencies:
 
 test:
   override:
-   bundle exec rspec -t smoke
+   - bundle exec rspec -t smoke
    #- bundle exec rake teaspoon
 
 deployment:
