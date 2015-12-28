@@ -42,5 +42,5 @@ deployment:
     # deploy to AWS elastic beanstalk environment
     #- bash aws_deploy.sh $CIRCLE_BUILD_NUM $DOCKER_PROJECT $ORG $EB_ENV:
     #    timeout: 1800
-    -bash aws --version
-    -bash aws s3 cp Dockerrun.aws.json.template s3://$EB_BUCKET
+    - bash aws --version
+    - bash aws s3 cp Dockerrun.aws.json.template s3://$EB_BUCKET
