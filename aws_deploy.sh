@@ -22,7 +22,7 @@ sed -e "s/<TAG>/$BUILD_TAG/" \
     < $DOCKERRUN_FILE.template > $DOCKERRUN_FILE
 
 # elastic beanstalk requires application source to be zipped
-zip -r $DOCKERRUN_FILE.zip $DOCKERRUN_FILE
+zip -r $DOCKERRUN_FILE.zip $DOCKERRUN_FILE .ebextensions
 
 echo "copying dockerrun file to s3 bucket..."
 aws s3 cp $DOCKERRUN_FILE.zip s3://$EB_BUCKET/$EB_ENV/$DOCKERRUN_FILE.zip
