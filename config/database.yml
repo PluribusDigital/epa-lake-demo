@@ -61,6 +61,7 @@ test: &test
   database: epa_test
 
 demo:
+  <<: *default
   adapter: postgresql
   encoding: unicode
   database: epa_demo
@@ -68,7 +69,6 @@ demo:
   password: <%= ENV['POSTGRES_ENV_POSTGRES_PASSWORD'] %>
   host: <%= ENV['POSTGRES_PORT_5432_TCP_ADDR'] %>
   port: <%= ENV['POSTGRES_PORT_5432_TCP_PORT'] %>
-  pool: 5
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
