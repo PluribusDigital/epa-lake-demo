@@ -25,7 +25,7 @@ sed -e "s/<TAG>/$BUILD_TAG/" \
 zip -r $DOCKERRUN_FILE.zip $DOCKERRUN_FILE
 
 echo "copying dockerrun file to s3 bucket..."
-#aws s3 cp $DOCKERRUN_FILE.zip s3://$EB_BUCKET/$EB_ENV/$DOCKERRUN_FILE.zip
+aws s3 cp $DOCKERRUN_FILE.zip s3://$EB_BUCKET/$EB_ENV/$DOCKERRUN_FILE.zip
 echo "dockerrun file copied"
 
 echo "creating elasticbeanstalk application version..."
