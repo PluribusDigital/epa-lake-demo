@@ -37,7 +37,7 @@
       ]
     },
     {
-      "name": "fda-sandbox-web",
+      "name": "epa-lake-demo-web",
       "image": "<ORG>/<DOCKER_PROJECT>:<TAG>",
       "environment": [
         {
