@@ -27,3 +27,7 @@
 # Don't store api keys in source control
 .env
 
+# Vagrant & Docker
+/.cache
+/.vagrant
+.bash_history
