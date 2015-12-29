@@ -1,11 +1,9 @@
 app.controller("HomeController", 
 	function ($scope, LakeService, $mdDialog, $mdMedia) {
 
+    // list of data files to select; set default
     $scope.files = ["Basin_Landuse_Metrics", "Buffer_Landuse_Metrics", "Chemical_ConditionEstimates", "PHab_IndexValues", "PHab_Metrics_A", "PHab_Metrics_B", "Plankton_OEModel_AnalysisData", "SampledLakeInformation", "WaterQuality"];
     $scope.selectedFile = "SampledLakeInformation";
-    $scope.tableData = null;
-    $scope.selectedField = null;
-    $scope.meta = null;
 
     // typeahead search
     $scope.searchPlaceholder = "Find a lake by name"
@@ -19,84 +17,82 @@ app.controller("HomeController",
         return promise;
     };  
 
-    $scope.selectField = function (field_name, ev) {
-        $scope.getMeta(field_name);
-        $scope.selectedField = field_name;
-        $scope.dialogFullscreen = $mdMedia('xs') || $mdMedia('sm');
-        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.dialogFullscreen;
-        $mdDialog.show({
-          controller: DialogController,
-          scope: $scope,
-          preserveScope: true,
-          templateUrl: 'Home/fieldDetailDialog.tmpl.html',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose:true,
-          fullscreen: useFullScreen
-        })
-        $scope.$watch(function() {
-          return $mdMedia('xs') || $mdMedia('sm');
-        }, function(wantsFullScreen) {
-          $scope.dialogFullscreen = (wantsFullScreen === true);
-        });
-    }
-
-    $scope.aboutShow = function (ev) {
-        $scope.dialogFullscreen = $mdMedia('xs') || $mdMedia('sm');
-        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.dialogFullscreen;
-        $mdDialog.show({
-          controller: DialogController,
-          templateUrl: 'Home/aboutDialog.tmpl.html',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose:true,
-          fullscreen: useFullScreen
-        })
-        $scope.$watch(function() {
-          return $mdMedia('xs') || $mdMedia('sm');
-        }, function(wantsFullScreen) {
-          $scope.dialogFullscreen = (wantsFullScreen === true);
-        });
-    }
-
-    function DialogController($scope, $mdDialog) {
-      $scope.hide = function() {
-        $mdDialog.hide();
-      };
-
-      // The global scope `U` is not available for binding in the HTML, but this way it is
-      angular.extend($scope, U);
-    }
-
-    $scope.getMeta = function (field_name) {
-        $scope.meta = null;  // Make sure bindings do not show old data
-        LakeService.getMeta(field_name,function(data){
-                $scope.meta = data;
-            }
-        );
-    }
-
+    // get and display the data once a lake is selected (i.e. via search)
     $scope.selectLake = function(item) {
       if (!U.isBlank(item)) {
         LakeService.get(item.site_id, function(data){
           $scope.lake = data;
-          // load in the selected file for thisn new lake
+          // once selected, load in the selected file for this new lake
           $scope.selectFile($scope.selectedFile);
         }
       );
       }
     }
 
+    // display data for the selected file within the lake
     $scope.selectFile = function(fileName) {
       $scope.fileData = $scope.lake.visits[0][fileName.toLowerCase()];
+      // set up an array that will be friendly for generating the table
       $scope.tableData = [];
       angular.forEach($scope.fileData, function(v, k) {
+        // we don't want to put visits into the table, it is an object
         if (k !== "visits") { 
           $scope.tableData.push({name:k,value:v});
         }
       });
     }
 
-    $scope.selectLake({site_id: 'NLA06608-0045'})
+    // user selects a field to drill down into
+    $scope.selectField = function (field_name, ev) {
+      $scope.getMeta(field_name);
+      $scope.selectedField = field_name;
+      showDialog({
+        scope: $scope,
+        preserveScope: true,
+        templateUrl: 'Home/fieldDetailDialog.tmpl.html',
+        targetEvent: ev
+      });
+    }
+
+    // grab the meta data for the selected field
+    $scope.getMeta = function (field_name) {
+      $scope.meta = null;  // Make sure bindings do not show old data
+      LakeService.getMeta(field_name,function(data){
+          $scope.meta = data;
+        }
+      );
+    }
+
+    // show the 'about' dialog when selected by user
+    $scope.aboutShow = function (ev) {
+      showDialog({
+        templateUrl: 'Home/aboutDialog.tmpl.html',
+        targetEvent: ev
+      });
+    }
+
+    // shared code to manage a dialog
+    showDialog = function(options) {
+      // set common options
+      $scope.dialogFullscreen = $mdMedia('xs') || $mdMedia('sm');
+      options.fullscreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.dialogFullscreen;
+      options.clickOutsideToClose = true;
+      options.controller = DialogController;
+      options.parent = angular.element(document.body);
+      // show & wire up the dialog
+      $mdDialog.show(options)
+      $scope.$watch(function() {
+        return $mdMedia('xs') || $mdMedia('sm');
+      }, function(wantsFullScreen) {
+        $scope.dialogFullscreen = (wantsFullScreen === true);
+      });
+    }
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+      // The global scope `U` is not available for binding in the HTML, but this way it is
+      angular.extend($scope, U);
+    }
 
 });

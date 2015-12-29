@@ -1,4 +1,5 @@
 app.filter('roundFloat',function() {
+  // show a rounded version of a float
   return function(input) {
     var numPlaces = 4; 
     return Math.round(input * Math.pow(10,numPlaces)) / Math.pow(10,numPlaces);
