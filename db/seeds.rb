@@ -11,12 +11,10 @@ require 'csv'
 # Find all CSV files, and import each into LakeData
 Dir.entries("data").each do |filename|
 	#only act on CSV
-
 	if filename[-4..-1] == ".csv"
 		table_name = filename[8..-5].sub(/[_]\d{8}/, "")
 		puts "======"
 		puts "Table: " + table_name
-		
 		CSV.foreach('data/'+filename,:headers => true, ) do |row|
       # downcase keys in row
       downcased_row = {}
@@ -49,7 +47,7 @@ Lake::FILES.each do |file_name|
   field_names_for(dataset).each do |field|
     puts "#{file_name} > #{field}: "
     puts data = TypeMatch.analyze_set(pluck_column(dataset,field))  
-    LakeDataField.create(file:file_name, field_name:field,data:data)
+    LakeDataField.create(file:file_name, field_name:field, data:data)
   end
   puts "~~~~~~~~~~~~~~~~~~~~~~~~"
 end

@@ -5,6 +5,9 @@ app.controller("HomeController",
     $scope.files = ["Basin_Landuse_Metrics", "Buffer_Landuse_Metrics", "Chemical_ConditionEstimates", "PHab_IndexValues", "PHab_Metrics_A", "PHab_Metrics_B", "Plankton_OEModel_AnalysisData", "SampledLakeInformation", "WaterQuality"];
     $scope.selectedFile = "SampledLakeInformation";
 
+    // there are a few repetetive/'noise' fields that we want to hide
+    $scope.fieldsToHide = ['visits','site_id','visit_no','st'];
+
     // typeahead search
     $scope.searchPlaceholder = "Find a lake by name"
 
@@ -35,8 +38,8 @@ app.controller("HomeController",
       // set up an array that will be friendly for generating the table
       $scope.tableData = [];
       angular.forEach($scope.fileData, function(v, k) {
-        // we don't want to put visits into the table, it is an object
-        if (k !== "visits") { 
+        // filter out a fiew fields we don't want to show
+        if ( $scope.fieldsToHide.indexOf(k) == -1 ) { 
           $scope.tableData.push({name:k,value:v});
         }
       });

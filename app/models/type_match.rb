@@ -4,7 +4,7 @@ class TypeMatch
     type = self.guess(set)
     if ["boolean","category"].include? type 
       values = analyze_category(set)
-    elsif ["int","float"].include? type
+    elsif ["integer","float"].include? type
       values = analyze_numeric(set)
     elsif type == "string"
       values = analyze_string(set)
