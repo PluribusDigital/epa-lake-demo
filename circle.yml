@@ -1,6 +1,4 @@
 machine:
-  timezone:
-    America/New_York
   python:
     version: 3.4.2
   services:
