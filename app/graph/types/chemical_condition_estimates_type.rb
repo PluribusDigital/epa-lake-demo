@@ -1,5 +1,5 @@
 ChemicalConditionEstimatesType = GraphQL::ObjectType.define do
-  name "Chemical Condition Estimates Data"
+  name "ChemicalConditionEstimatesData"
   description "Data Description Required by EPA"
   field :rt_nla, !types.String, 'Description Required by EPA'
   field :epa_reg, !types.String, 'Description Required by EPA'

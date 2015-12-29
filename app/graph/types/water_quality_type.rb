@@ -1,5 +1,5 @@
 WaterQualityType = GraphQL::ObjectType.define do
-  name "Water Quality Data"
+  name "WaterQualityData"
   description "Data Description Required by EPA"
   field :mg_ht, !types.Int, 'Description Required by EPA'
   field :na_ht, !types.Int, 'Description Required by EPA'

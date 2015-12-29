@@ -1,5 +1,5 @@
 BasinLanduseMetricsType = GraphQL::ObjectType.define do
-  name "Basin Land Use Metrics Data"
+  name "BasinLandUseMetricsData"
   description "Data Description Required by EPA"
   field :visit_no, !types.String, 'Description Required by EPA'
   field :lake_samp, !types.String, 'Description Required by EPA'

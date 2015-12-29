@@ -1,6 +1,6 @@
 # Plankton_OEModel_AnalysisData
 PlanktonOemodelAnalysisDataType = GraphQL::ObjectType.define do
-  name "Plankton O.E. Model Analysis Data"
+  name "PlanktonOEModelAnalysisData"
   description "Data Description Required by EPA"
   field :otu_oe5, !types.String, 'Description Required by EPA'
   field :site_id, !types.String, 'Description Required by EPA'

@@ -67,9 +67,16 @@ app.controller("HomeController",
     }
 
     // show the 'about' dialog when selected by user
-    $scope.aboutShow = function (ev) {
+    $scope.showAbout = function (ev) {
       showDialog({
         templateUrl: 'Home/aboutDialog.tmpl.html',
+        targetEvent: ev
+      });
+    }
+    // show the 'about' dialog when selected by user
+    $scope.showDevelopers = function (ev) {
+      showDialog({
+        templateUrl: 'Home/developersDialog.tmpl.html',
         targetEvent: ev
       });
     }

@@ -1,0 +1,151 @@
+<!-- 
+LICENSE AGREEMENT For GraphiQL software
+
+Facebook, Inc. (“Facebook”) owns all right, title and interest, including all
+intellectual property and other proprietary rights, in and to the GraphiQL
+software. Subject to your compliance with these terms, you are hereby granted a
+non-exclusive, worldwide, royalty-free copyright license to (1) use and copy the
+GraphiQL software; and (2) reproduce and distribute the GraphiQL software as
+part of your own software (“Your Software”). Facebook reserves all rights not
+expressly granted to you in this license agreement.
+
+THE SOFTWARE AND DOCUMENTATION, IF ANY, ARE PROVIDED "AS IS" AND ANY EXPRESS OR
+IMPLIED WARRANTIES (INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE) ARE DISCLAIMED. IN NO
+EVENT SHALL FACEBOOK OR ITS AFFILIATES, OFFICES, DIRECTORS OR EMPLOYEES BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+THE USE OF THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You will include in Your Software (e.g., in the file(s), documentation or other
+materials accompanying your software): (1) the disclaimer set forth above; (2)
+this sentence; and (3) the following copyright notice:
+
+Copyright (c) 2015, Facebook, Inc. All rights reserved.
+ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GraphQL Ruby + Rails Demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.4.5/graphiql.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/0.10.1/fetch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.4.5/graphiql.min.js"></script>
+  </head>
+  <body>
+    Loading...
+    <script>
+
+var introQuery = '# Welcome to GraphiQL \n\
+# \n\
+# GraphiQL is an in-browser IDE for writing, validating, and \n\
+# testing GraphQL queries. \n\
+# \n\
+# Type queries into this side of the screen, and you will \n\
+# see intelligent typeaheads aware of the current GraphQL type schema and \n\
+# live syntax and validation errors highlighted within the text. \n\
+# \n\
+# To bring up the auto-complete at any point, just press Ctrl-Space. \n\
+# \n\
+# Press the run button above, or Cmd-Enter to execute the query, and the result \n\
+# will appear in the pane to the right.\n\n \
+query detail{ \n\
+   lake(site_id:"NLA06608-0045"){ \n\
+    lakename,\n\
+    cntyname,\n\
+    st,\n\
+    visits{\n\
+      visit_no,\n\
+      basin_landuse_metrics{\n\
+        basinarea_ha,\n\
+        pct_grass_bsn\n\
+      },\n\
+      buffer_landuse_metrics{\n\
+        bufferarea_ha,\n\
+        pct_grass_bufr\n\
+        \n\
+      }\n\
+    }\n\
+  } \n\
+}\n\
+\n\
+# query search{ \n\
+#    lakes(search_string:"middle"){ \n\
+#     lakename,\n\
+#     cntyname,\n\
+#     st\n\
+#   } \n\
+# }';
+
+
+
+    // Parse the search string to get url parameters.
+    var search = window.location.search;
+    var parameters = {};
+    search.substr(1).split('&').forEach(function (entry) {
+      var eq = entry.indexOf('=');
+      if (eq >= 0) {
+        parameters[decodeURIComponent(entry.slice(0, eq))] =
+          decodeURIComponent(entry.slice(eq + 1));
+      }
+    });
+    // if variables was provided, try to format it.
+    if (parameters.variables) {
+      try {
+        parameters.variables =
+          JSON.stringify(JSON.parse(parameters.variables), null, 2);
+      } catch (e) {
+        // Do nothing, we want to display the invalid JSON as a string, rather
+        // than present an error.
+      }
+    }
+    // When the query and variables string is edited, update the URL bar so
+    // that it can be easily shared
+    function onEditQuery(newQuery) {
+      parameters.query = newQuery;
+      updateURL();
+    }
+    function onEditVariables(newVariables) {
+      parameters.variables = newVariables;
+      updateURL();
+    }
+    function updateURL() {
+      var newSearch = '?' + Object.keys(parameters).map(function (key) {
+        return encodeURIComponent(key) + '=' +
+          encodeURIComponent(parameters[key]);
+      }).join('&');
+      history.replaceState(null, null, newSearch);
+    }
+    // Defines a GraphQL fetcher using the fetch API.
+    function graphQLFetcher(graphQLParams) {
+      return fetch(window.location.origin + '/queries', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(graphQLParams),
+        credentials: 'include',
+      }).then(function (response) {
+        return response.json()
+      });
+    }
+    // Render <GraphiQL /> into the body.
+    var defaultQuery = introQuery;
+    ReactDOM.render(
+      React.createElement(GraphiQL, {
+        fetcher: graphQLFetcher,
+        query: parameters.query || defaultQuery,
+        variables: parameters.variables,
+        onEditQuery: onEditQuery,
+        onEditVariables: onEditVariables
+      }),
+      document.body
+    );
+    </script>
+  </body>
+</html>

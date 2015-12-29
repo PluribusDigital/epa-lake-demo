@@ -1,5 +1,5 @@
 PhabIndexValuesType = GraphQL::ObjectType.define do
-  name "PHab Index Values Data"
+  name "PHabIndexValuesData"
   description "Data Description Required by EPA"
   field :site_type, !types.String, 'Description Required by EPA'
   field :st, !types.String, 'Description Required by EPA'

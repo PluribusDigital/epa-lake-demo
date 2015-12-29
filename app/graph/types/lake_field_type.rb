@@ -1,5 +1,5 @@
 LakeFieldType = GraphQL::ObjectType.define do
-  name "Lake Field"
+  name "LakeField"
   description "Metadata on lake field"
   field :file, !types.String, 'File name of original EPA file'
   field :field_name, !types.String, 'Name of field (i.e. CSV column header)'

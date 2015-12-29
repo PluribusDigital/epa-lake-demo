@@ -1,5 +1,5 @@
 PhabMetricsBType = GraphQL::ObjectType.define do
-  name "PHab Metrics B Type Data"
+  name "PHabMetricsBTypeData"
   description "Data Description Required by EPA"
   field :st, !types.String, 'Description Required by EPA'
   field :uid, !types.String, 'Description Required by EPA'

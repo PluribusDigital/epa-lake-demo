@@ -1,5 +1,5 @@
 BufferLanduseMetricsType = GraphQL::ObjectType.define do
-  name "Buffer Land Use Metrics Data"
+  name "BufferLandUseMetricsData"
   description "Data Description Required by EPA"
   field :visit_no, !types.String, 'Description Required by EPA'
   field :lake_samp, !types.String, 'Description Required by EPA'

@@ -1,5 +1,5 @@
 MeandoConditionEstimateType = GraphQL::ObjectType.define do
-  name "Mean D.O. Condition Estimate Data"
+  name "MeanDOConditionEstimateData"
   description "Data Description Required by EPA"
   field :lake_samp, !types.String, 'Description Required by EPA'
   field :site_type, !types.String, 'Description Required by EPA'
