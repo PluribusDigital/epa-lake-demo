@@ -1,3 +1,20 @@
 .muted {
   color:#999;
 }
+
+div.sidebar {
+  background: #eef;
+  color: #336;
+}
+
+md-select {
+  font-weight:bold;
+}
+
+.padded-content {
+  padding: 10px;
+}
+
+md-card > img.logo, md-card > :not(md-card-content) img.logo {
+  width: 200px !important;
+}

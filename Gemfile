@@ -15,12 +15,7 @@ gem 'sass', '3.2.19'
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-
-# HTTParty to interact with external REST APIs
-# gem 'httparty'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.0'
-
+# allow rails to better serve up angular templates
 gem 'angular-rails-templates', '~> 0.1.3'
 
 group :production, :staging do
@@ -38,7 +33,6 @@ end
 group :test, :development do
   gem "pry"
   gem 'rspec-rails', '~> 3.0.0'
-  gem 'cucumber-rails', :require => false
   gem "capybara"
   gem "database_cleaner"
   gem "selenium-webdriver"
