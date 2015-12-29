@@ -1,8 +1,10 @@
-# EPA National Lake Assessment Prototype
+# EPA National Lakes Assessment Prototype
 
 The EPA National Lakes Assessment is a statistical survey of the condition of our nation's lakes, ponds, and reservoirs. This application allows you to explore that data. You can explore the dataset, viewing the data for a given lake. Further, you can gain context about the data. By clicking on a field, you get a definition of what it contains, as well as some descriptive statistics as to how the lake compares to other lakes.
 
 This prototype application was developed by STSI as part of a response to a Request for Information published by the EPA. The EPA has done a great job of making raw data available as a set of CSV files. This prototype expands on that, allowing would-be users of the data a chance to "kick the tires" and understand the contents of the dataset.
+
+See the live prototype at [http://nla.stsiinc.biz/](http://nla.stsiinc.biz/).
 
 ## Installation
 *Windows Users should perform the following steps using the Git Shell*
