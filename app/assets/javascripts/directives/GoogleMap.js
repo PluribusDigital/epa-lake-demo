@@ -32,7 +32,7 @@ directives.directive("googleMap", ['MapInitializer', function (MapInitializer) {
                         var marker = new google.maps.Marker({
                             position: { lat: lat, lng: lng },
                             map: gmap.map,
-                            title: 'Hello World!'
+                            title: 'Lake Location'
                         });
                     }
                 });
