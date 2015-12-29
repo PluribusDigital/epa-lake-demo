@@ -1,6 +1,4 @@
 machine:
-  timezone:
-    America/New_York
   python:
     version: 3.4.2
   services:
@@ -15,6 +13,7 @@ dependencies:
     # install aws command line tools for elasticbean stalk deployment
     - pip install awscli
   post:
+    - aws s3 cp s3://open-fda/.env .env
     - bundle exec rake bower:install
     # restore docker images from cache
     - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
