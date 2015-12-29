@@ -6,7 +6,7 @@ This prototype application was developed by STSI as part of a response to a Requ
 
 See the live prototype at [http://nla.stsiinc.biz/](http://nla.stsiinc.biz/).
 
-<iframe width="420" height="315" src="https://www.youtube.com/embed/vQLbE3hn__o" frameborder="0" allowfullscreen></iframe>
+See also: [prototype walkthrough video on YouTube](https://www.youtube.com/watch?v=vQLbE3hn__o).
 
 ## Installation
 *Windows Users should perform the following steps using the Git Shell*
