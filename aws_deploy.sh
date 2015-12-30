@@ -20,7 +20,7 @@ sed -e "s/<TAG>/$BUILD_TAG/" \
     -e "s/<DOCKER_PROJECT>/$DOCKER_PROJECT/" \
     -e "s/<POSTGRES_USER>/docker/" \
     -e "s/<POSTGRES_PASSWORD>/docker/" \
-    -e "s/<SECRET_KEY_BASE>/$SECRET_KEY_BASE"
+    -e "s/<SECRET_KEY_BASE>/$SECRET_KEY_BASE/" \
     < $DOCKERRUN_FILE.template > $DOCKERRUN_FILE
 
 # elastic beanstalk requires application source to be zipped
