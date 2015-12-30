@@ -5,6 +5,7 @@ BUILD_TAG=$1
 DOCKER_PROJECT=$2
 ORG=$3
 EB_ENV=$4
+SECRET_KEY_BASE=$5
 APP_NAME=$EB_ENV
 
 DOCKERRUN_FILE=Dockerrun.aws.json
@@ -19,10 +20,11 @@ sed -e "s/<TAG>/$BUILD_TAG/" \
     -e "s/<DOCKER_PROJECT>/$DOCKER_PROJECT/" \
     -e "s/<POSTGRES_USER>/docker/" \
     -e "s/<POSTGRES_PASSWORD>/docker/" \
+    -e "s/<SECRET_KEY_BASE>/$SECRET_KEY_BASE"
     < $DOCKERRUN_FILE.template > $DOCKERRUN_FILE
 
 # elastic beanstalk requires application source to be zipped
-zip -r $DOCKERRUN_FILE.zip $DOCKERRUN_FILE .ebextensions
+zip -r $DOCKERRUN_FILE.zip $DOCKERRUN_FILE
 
 echo "copying dockerrun file to s3 bucket..."
 aws s3 cp $DOCKERRUN_FILE.zip s3://$EB_BUCKET/$EB_ENV/$DOCKERRUN_FILE.zip

@@ -43,6 +43,10 @@
         {
           "name": "RAILS_ENV",
           "value": "demo"
+        },
+        {
+          "name": "SECRET_KEY_BASE",
+          "value": "<SECRET_KEY_BASE>"
         }
       ],
       "essential": true,

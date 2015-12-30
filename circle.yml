@@ -1,4 +1,6 @@
 machine:
+  python:
+    version: 3.4.2
   services:
     - docker
   environment:
@@ -12,6 +14,8 @@ dependencies:
     - pip install awscli
   post:
     - bundle exec rake bower:install
+    # restore docker images from cache
+    - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
 
 test:
   override:
@@ -31,6 +35,8 @@ deployment:
     # push docker image
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
     - docker push $ORG/$DOCKER_PROJECT:$BUILD_TAG
+    # cache docker image for future circleci builds
+    - mkdir -p ~/docker; docker save stsilabs/epa-lake-demo-web > ~/docker/image.tar
     # deploy to AWS elastic beanstalk environment
-    - bash aws_deploy.sh $CIRCLE_BUILD_NUM $DOCKER_PROJECT $ORG $EB_ENV:
+    - bash aws_deploy.sh $CIRCLE_BUILD_NUM $DOCKER_PROJECT $ORG $EB_ENV $SECRET_KEY_BASE:
         timeout: 1800
