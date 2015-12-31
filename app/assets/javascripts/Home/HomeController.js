@@ -1,5 +1,5 @@
 app.controller("HomeController", 
-	function ($scope, LakeService, $mdDialog, $mdMedia) {
+	function ($scope, LakeService, $mdDialog, $mdMedia, $mdSidenav) {
 
     // list of data files to select; set default
     $scope.files = ["Basin_Landuse_Metrics", "Buffer_Landuse_Metrics", "Chemical_ConditionEstimates", "PHab_IndexValues", "PHab_Metrics_A", "PHab_Metrics_B", "Plankton_OEModel_AnalysisData", "SampledLakeInformation", "WaterQuality"];
@@ -105,4 +105,7 @@ app.controller("HomeController",
       angular.extend($scope, U);
     }
 
+    $scope.toggleNav = function () {
+        $mdSidenav('left').toggle();;
+    };
 });
