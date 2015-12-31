@@ -84,18 +84,12 @@ app.controller("HomeController",
     // shared code to manage a dialog
     showDialog = function(options) {
       // set common options
-      $scope.dialogFullscreen = $mdMedia('xs') || $mdMedia('sm');
-      options.fullscreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.dialogFullscreen;
+      options.fullscreen = ($mdMedia('sm') || $mdMedia('xs'));
       options.clickOutsideToClose = true;
       options.controller = DialogController;
       options.parent = angular.element(document.body);
       // show & wire up the dialog
       $mdDialog.show(options)
-      $scope.$watch(function() {
-        return $mdMedia('xs') || $mdMedia('sm');
-      }, function(wantsFullScreen) {
-        $scope.dialogFullscreen = (wantsFullScreen === true);
-      });
     }
     function DialogController($scope, $mdDialog) {
       $scope.hide = function() {

@@ -17,6 +17,12 @@ md-select {
 	}
 }
 
+@media (max-width: 599px) {
+	 md-autocomplete input:not(.md-input) {
+		font-size:16px;
+	}
+}
+
 md-card > img.logo, md-card > :not(md-card-content) img.logo {
   width: 200px !important;
 }
